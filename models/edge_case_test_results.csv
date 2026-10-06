@@ -1,0 +1,113 @@
+scenario,category,crop,stage,moisture,expected,model_raw,final,override_fired,ood_flagged,probability,pass
+Severe drought,safety,Cotton,Flowering,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Cotton,Flowering,95,False,False,False,True,True,0.031,True
+"Dry spell, rain incoming",rule,Cotton,Flowering,35,False,False,False,False,False,0.106,True
+"Moderate moisture, clear skies",rule,Cotton,Flowering,33,False,True,True,False,False,0.891,False
+"Comfortable moisture, mild weather",rule,Cotton,Flowering,65,False,False,False,False,False,0.111,True
+"Cold winter day, low moisture",rule,Cotton,Flowering,30,True,True,True,False,False,0.995,True
+"Very low moisture, no rain",rule,Cotton,Flowering,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Cotton,Maturity,18,True,True,True,True,True,0.99,True
+"Heavy monsoon, saturated soil",safety,Cotton,Maturity,95,False,False,False,True,True,0.031,True
+"Dry spell, rain incoming",rule,Cotton,Maturity,35,False,False,False,False,False,0.071,True
+"Moderate moisture, clear skies",rule,Cotton,Maturity,33,False,False,False,False,False,0.199,True
+"Comfortable moisture, mild weather",rule,Cotton,Maturity,65,False,False,False,False,False,0.052,True
+"Cold winter day, low moisture",rule,Cotton,Maturity,30,False,False,False,False,False,0.208,True
+"Very low moisture, no rain",rule,Cotton,Maturity,22,True,True,True,False,False,0.885,True
+Severe drought,safety,Cotton,Seedling,18,True,True,True,True,True,0.998,True
+"Heavy monsoon, saturated soil",safety,Cotton,Seedling,95,False,False,False,True,True,0.037,True
+"Dry spell, rain incoming",rule,Cotton,Seedling,35,False,False,False,False,False,0.092,True
+"Moderate moisture, clear skies",rule,Cotton,Seedling,33,False,False,False,False,False,0.143,True
+"Comfortable moisture, mild weather",rule,Cotton,Seedling,65,False,False,False,False,False,0.048,True
+"Cold winter day, low moisture",rule,Cotton,Seedling,30,False,False,False,False,False,0.319,True
+"Very low moisture, no rain",rule,Cotton,Seedling,22,True,True,True,False,False,0.981,True
+Severe drought,safety,Cotton,Vegetative,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Cotton,Vegetative,95,False,False,False,True,True,0.037,True
+"Dry spell, rain incoming",rule,Cotton,Vegetative,35,False,False,False,False,False,0.087,True
+"Moderate moisture, clear skies",rule,Cotton,Vegetative,33,False,False,False,False,False,0.284,True
+"Comfortable moisture, mild weather",rule,Cotton,Vegetative,65,False,False,False,False,False,0.117,True
+"Cold winter day, low moisture",rule,Cotton,Vegetative,30,False,True,True,False,False,0.901,False
+"Very low moisture, no rain",rule,Cotton,Vegetative,22,True,True,True,False,False,0.999,True
+Severe drought,safety,Maize,Flowering,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Maize,Flowering,95,False,False,False,True,True,0.036,True
+"Dry spell, rain incoming",rule,Maize,Flowering,35,False,False,False,False,False,0.097,True
+"Moderate moisture, clear skies",rule,Maize,Flowering,33,True,True,True,False,False,0.999,True
+"Comfortable moisture, mild weather",rule,Maize,Flowering,65,False,False,False,False,False,0.217,True
+"Cold winter day, low moisture",rule,Maize,Flowering,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Maize,Flowering,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Maize,Maturity,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Maize,Maturity,95,False,False,False,True,True,0.038,True
+"Dry spell, rain incoming",rule,Maize,Maturity,35,False,False,False,False,False,0.039,True
+"Moderate moisture, clear skies",rule,Maize,Maturity,33,False,True,True,False,False,0.366,False
+"Comfortable moisture, mild weather",rule,Maize,Maturity,65,False,False,False,False,False,0.145,True
+"Cold winter day, low moisture",rule,Maize,Maturity,30,False,True,True,False,False,0.97,False
+"Very low moisture, no rain",rule,Maize,Maturity,22,True,True,True,False,False,0.999,True
+Severe drought,safety,Maize,Seedling,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Maize,Seedling,95,False,False,False,True,True,0.045,True
+"Dry spell, rain incoming",rule,Maize,Seedling,35,False,False,False,False,False,0.058,True
+"Moderate moisture, clear skies",rule,Maize,Seedling,33,False,True,True,False,False,0.603,False
+"Comfortable moisture, mild weather",rule,Maize,Seedling,65,False,False,False,False,False,0.152,True
+"Cold winter day, low moisture",rule,Maize,Seedling,30,True,True,True,False,False,0.991,True
+"Very low moisture, no rain",rule,Maize,Seedling,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Maize,Vegetative,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Maize,Vegetative,95,False,False,False,True,True,0.041,True
+"Dry spell, rain incoming",rule,Maize,Vegetative,35,False,False,False,False,False,0.051,True
+"Moderate moisture, clear skies",rule,Maize,Vegetative,33,True,True,True,False,False,0.988,True
+"Comfortable moisture, mild weather",rule,Maize,Vegetative,65,False,False,False,False,False,0.218,True
+"Cold winter day, low moisture",rule,Maize,Vegetative,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Maize,Vegetative,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Rice,Flowering,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Rice,Flowering,95,False,False,False,True,True,0.069,True
+"Dry spell, rain incoming",rule,Rice,Flowering,35,False,True,True,False,False,0.998,False
+"Moderate moisture, clear skies",rule,Rice,Flowering,33,True,True,True,False,False,1.0,True
+"Comfortable moisture, mild weather",rule,Rice,Flowering,65,False,True,True,False,False,0.566,False
+"Cold winter day, low moisture",rule,Rice,Flowering,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Rice,Flowering,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Rice,Maturity,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Rice,Maturity,95,False,False,False,True,True,0.077,True
+"Dry spell, rain incoming",rule,Rice,Maturity,35,False,False,False,False,False,0.357,True
+"Moderate moisture, clear skies",rule,Rice,Maturity,33,True,True,True,False,False,1.0,True
+"Comfortable moisture, mild weather",rule,Rice,Maturity,65,False,False,False,False,False,0.164,True
+"Cold winter day, low moisture",rule,Rice,Maturity,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Rice,Maturity,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Rice,Seedling,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Rice,Seedling,95,False,False,False,True,True,0.091,True
+"Dry spell, rain incoming",rule,Rice,Seedling,35,False,True,True,False,False,0.576,False
+"Moderate moisture, clear skies",rule,Rice,Seedling,33,True,True,True,False,False,1.0,True
+"Comfortable moisture, mild weather",rule,Rice,Seedling,65,False,False,False,False,False,0.173,True
+"Cold winter day, low moisture",rule,Rice,Seedling,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Rice,Seedling,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Rice,Vegetative,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Rice,Vegetative,95,False,False,False,True,True,0.09,True
+"Dry spell, rain incoming",rule,Rice,Vegetative,35,False,True,True,False,False,0.925,False
+"Moderate moisture, clear skies",rule,Rice,Vegetative,33,True,True,True,False,False,1.0,True
+"Comfortable moisture, mild weather",rule,Rice,Vegetative,65,False,False,False,False,False,0.188,True
+"Cold winter day, low moisture",rule,Rice,Vegetative,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Rice,Vegetative,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Wheat,Flowering,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Wheat,Flowering,95,False,False,False,True,True,0.036,True
+"Dry spell, rain incoming",rule,Wheat,Flowering,35,False,False,False,False,False,0.109,True
+"Moderate moisture, clear skies",rule,Wheat,Flowering,33,True,True,True,False,False,0.996,True
+"Comfortable moisture, mild weather",rule,Wheat,Flowering,65,False,False,False,False,False,0.199,True
+"Cold winter day, low moisture",rule,Wheat,Flowering,30,True,True,True,False,False,1.0,True
+"Very low moisture, no rain",rule,Wheat,Flowering,22,True,True,True,False,False,1.0,True
+Severe drought,safety,Wheat,Maturity,18,True,True,True,True,True,0.999,True
+"Heavy monsoon, saturated soil",safety,Wheat,Maturity,95,False,False,False,True,True,0.036,True
+"Dry spell, rain incoming",rule,Wheat,Maturity,35,False,False,False,False,False,0.044,True
+"Moderate moisture, clear skies",rule,Wheat,Maturity,33,False,False,False,False,False,0.272,True
+"Comfortable moisture, mild weather",rule,Wheat,Maturity,65,False,False,False,False,False,0.125,True
+"Cold winter day, low moisture",rule,Wheat,Maturity,30,False,True,True,False,False,0.83,False
+"Very low moisture, no rain",rule,Wheat,Maturity,22,True,True,True,False,False,0.996,True
+Severe drought,safety,Wheat,Seedling,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Wheat,Seedling,95,False,False,False,True,True,0.043,True
+"Dry spell, rain incoming",rule,Wheat,Seedling,35,False,False,False,False,False,0.068,True
+"Moderate moisture, clear skies",rule,Wheat,Seedling,33,False,False,False,False,False,0.276,True
+"Comfortable moisture, mild weather",rule,Wheat,Seedling,65,False,False,False,False,False,0.109,True
+"Cold winter day, low moisture",rule,Wheat,Seedling,30,False,True,True,False,False,0.932,False
+"Very low moisture, no rain",rule,Wheat,Seedling,22,True,True,True,False,False,0.999,True
+Severe drought,safety,Wheat,Vegetative,18,True,True,True,True,True,1.0,True
+"Heavy monsoon, saturated soil",safety,Wheat,Vegetative,95,False,False,False,True,True,0.043,True
+"Dry spell, rain incoming",rule,Wheat,Vegetative,35,False,False,False,False,False,0.061,True
+"Moderate moisture, clear skies",rule,Wheat,Vegetative,33,False,True,True,False,False,0.932,False
+"Comfortable moisture, mild weather",rule,Wheat,Vegetative,65,False,False,False,False,False,0.166,True
+"Cold winter day, low moisture",rule,Wheat,Vegetative,30,True,True,True,False,False,0.996,True
+"Very low moisture, no rain",rule,Wheat,Vegetative,22,True,True,True,False,False,1.0,True

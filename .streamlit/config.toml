@@ -1,0 +1,10 @@
+# Streamlit Community Cloud reads this automatically on deploy.
+[theme]
+primaryColor = "#2E7D32"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F1F8E9"
+textColor = "#1A1A1A"
+font = "sans serif"
+
+[server]
+headless = true

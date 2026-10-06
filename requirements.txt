@@ -1,0 +1,25 @@
+# Deployment requirements for the Streamlit dashboard (dashboard/app.py).
+# This is what Streamlit Community Cloud installs - keep it minimal.
+#
+# Day 8 finding #1: importing TensorFlow alone measured ~700MB RAM,
+# dangerously close to Streamlit Cloud's 1GB free-tier limit before the app
+# does anything. The Neural Network is served via a pure-NumPy
+# reimplementation of its forward pass (src/nn_numpy_inference.py),
+# verified numerically identical to the trained Keras model, so TensorFlow
+# is not needed to run the dashboard at all - only to retrain the network
+# (see requirements-dev.txt). Matplotlib/seaborn are likewise
+# training/EDA-only and not imported by the dashboard.
+#
+# Day 8 finding #2: scikit-learn was left unpinned (">=1.4"), so a fresh
+# install pulled 1.9.1 while the saved .joblib models were pickled with
+# 1.8.0 - scikit-learn raised InconsistentVersionWarning and explicitly
+# warns this "might lead to breaking code or invalid results." Pinned exact
+# versions below match what the models were actually trained/pickled with,
+# verified by a clean-venv install + full dashboard run producing zero
+# warnings (see README Day 8).
+numpy==2.4.4
+pandas==3.0.2
+scikit-learn==1.8.0
+streamlit==1.65.0
+requests>=2.31
+joblib==1.5.3

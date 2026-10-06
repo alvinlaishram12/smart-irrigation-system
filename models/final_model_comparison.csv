@@ -1,0 +1,8 @@
+model,accuracy,precision,recall,f1_score,roc_auc
+Majority Class Baseline,0.8818,0.0,0.0,0.0,0.5
+Decision Tree,0.8664,0.4416,0.4928,0.4658,0.7046
+Decision Tree (tuned threshold=1.00),0.8664,0.4416,0.4928,0.4658,0.7046
+Random Forest,0.8784,0.4861,0.5072,0.4965,0.8134
+Random Forest (tuned threshold=0.69),0.9144,1.0,0.2754,0.4318,0.8134
+Neural Network,0.9315,0.7101,0.7101,0.7101,0.8388
+Neural Network (tuned threshold=0.72),0.9401,0.7931,0.6667,0.7244,0.8388

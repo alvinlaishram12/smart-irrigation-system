@@ -1,0 +1,9 @@
+# Full development environment: everything in requirements.txt, plus the
+# tools needed to retrain models or regenerate EDA plots. NOT needed to run
+# the deployed dashboard - see requirements.txt for that (smaller, faster
+# to install, and fits comfortably in Streamlit Community Cloud's free
+# tier).
+-r requirements.txt
+matplotlib>=3.8
+seaborn>=0.13
+tensorflow>=2.15
