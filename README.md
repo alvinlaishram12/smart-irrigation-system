@@ -13,7 +13,8 @@ required — built entirely in Python.
 - [x] **Day 4 — Neural Network + model comparison report** *(done)*
 - [x] **Day 5 — Live weather (Open-Meteo) API integration** *(done)*
 - [x] **Day 6 — Streamlit dashboard** *(done)*
-- [x] **Day 7 — Edge-case testing & polish** *(done — project complete)*
+- [x] **Day 7 — Edge-case testing & polish** *(done)*
+- [x] **Day 8 — Deployment readiness (Streamlit Community Cloud)** *(done — see DEPLOYMENT.md)*
 
 ## Project Structure
 
@@ -599,17 +600,124 @@ a confusing near-zero to a sensible -0.35).
 - Dashboard re-verified with `AppTest` after every change (model switch to
   Neural Network included) rather than assumed still-working.
 
-## Project Status: Complete
+## Day 8: Deployment Readiness (Streamlit Community Cloud)
 
-All 7 planned days are done. What's in this repository is an honestly-tested
+Full step-by-step deployment instructions are in **`DEPLOYMENT.md`** — this
+section covers what had to be fixed first to make deployment viable at all.
+
+**The goal was to deploy the Day 6 dashboard to Streamlit Community Cloud's
+free tier.** Testing deployment-readiness (not just "does it run on my
+machine") surfaced two real correctness/resource bugs and one real
+reproducibility risk that had been silently present since Day 4.
+
+### Bug #1 (serious): TensorFlow alone nearly exceeds the free tier's RAM limit
+
+Measured directly: `import tensorflow` consumes **~700MB RAM** before a
+single prediction happens — dangerously close to Streamlit Community
+Cloud's 1GB free-tier ceiling, with pandas/scikit-learn/Streamlit's own
+overhead still to come. Since **Neural Network is the dashboard's default
+model** (Day 7's winner), this would import on essentially every session
+and risked crashing the app on deploy, never mind performance.
+
+The network itself is tiny (15 inputs → Dense(32,relu) → Dense(16,relu) →
+Dense(1,sigmoid); Dropout is a no-op at inference), so rather than
+downgrade to a worse model purely to save memory, `src/nn_numpy_inference.py`
+exports the trained Keras model's weights once and reimplements the forward
+pass in plain NumPy. Verified numerically identical to the original Keras
+model: max probability difference **4.5e-07** (floating-point noise) and
+**zero** binary-decision differences across the entire 584-row test set.
+TensorFlow is no longer imported anywhere in the live/deployed path
+(`predict_live.py`, `dashboard/app.py`, `test_edge_cases.py`) — it remains
+a dev-only dependency for *training* the network (`requirements-dev.txt`).
+Result: peak measured RAM for the full dashboard dropped from a
+TensorFlow-breaking >700MB to **~290MB**, comfortably within the free tier.
+
+### Bug #2 (real, quiet correctness bug): the Neural Network's tuned threshold was never saved
+
+`train_neural_network.py` (Day 4) computed an F1-optimal threshold (0.72)
+for the Neural Network but **never persisted it anywhere**. Both
+`predict_live.py` and `test_edge_cases.py` look it up as
+`tuned_thresholds["neural_network"]`, which never existed — so every live
+prediction and the entire Day 7 edge-case suite had silently been using
+scikit-learn's default of 0.5 instead. This went unnoticed because 0.5 is a
+*plausible* threshold, not a crash — exactly the kind of quiet bug that
+survives until someone actually checks the saved artifact's contents
+instead of trusting that the code path does what its comments claim.
+
+Fixed in `src/add_nn_threshold.py`, which also upgrades the fix to match
+Day 7's own stated philosophy: rather than just hard-code the old
+F1-optimal 0.72, it applies the same recall-weighted F-beta(beta=2) tuning
+Day 7 used for Decision Tree/Random Forest (a missed irrigation costs more
+than an extra one), computed via the new NumPy inference path. Result:
+threshold **0.5 → 0.36**.
+
+**Re-running the full edge-case suite with the corrected threshold gives
+100/112 (89.3%)** — marginally lower than the previously-reported-but-buggy
+90.2%, and that difference is itself informative, not a regression: the 12
+newly-failing combinations are **all false positives** (recommending
+irrigation slightly early), never false negatives. That's the safer
+failure direction by this project's own design philosophy (a wasted
+watering costs little; a missed one risks the crop) — the honest number
+reflects the properly-calibrated recall-biased operating point, not a
+worse model.
+
+### Finding #3: unpinned scikit-learn risked silently breaking on deploy
+
+Testing the fix required simulating what Streamlit Cloud actually does — a
+**clean virtual environment**, installing only `requirements.txt` from
+scratch (not this project's long-lived sandbox, which had packages
+installed over many sessions and could mask a version drift). That
+surfaced `sklearn.exceptions.InconsistentVersionWarning`: the saved
+`.joblib` models were pickled with scikit-learn 1.8.0, but the unpinned
+`scikit-learn>=1.4` requirement let a fresh install pull 1.9.1 — scikit-learn
+itself warns this "might lead to breaking code or invalid results." Fixed
+by pinning exact versions (`numpy==2.4.4`, `pandas==3.0.2`,
+`scikit-learn==1.8.0`, `streamlit==1.65.0`, `joblib==1.5.3`) matching what
+the models were actually trained with. Re-verified in a second clean venv:
+zero warnings.
+
+### Other deployment prep
+
+- **`requirements.txt` split in two**: a minimal deployment set (what
+  Streamlit Cloud actually installs) and `requirements-dev.txt` (adds
+  TensorFlow/matplotlib/seaborn, needed only to retrain models or
+  regenerate EDA figures).
+- **File size check**: largest tracked file is `random_forest.joblib` at
+  4MB; total repo ~10MB — nowhere near GitHub's 100MB-per-file hard limit.
+- **`.python-version`** and **`.streamlit/config.toml`** (a green theme
+  matching the project) added so the deployed app's environment and
+  appearance are both intentional, not accidental defaults.
+- **Local git repository initialized** with one clean commit (`git log`
+  confirms 58 tracked files, no `__pycache__`/cache artifacts committed).
+  Actually pushing to GitHub and connecting Streamlit Community Cloud
+  requires your own accounts, so that part is manual — see
+  **`DEPLOYMENT.md`** for the exact remaining steps (should take about 5
+  minutes).
+
+**What could not be verified from this sandbox:** this sandbox's network is
+restricted to an allowlist that includes neither `api.open-meteo.com` nor
+`share.streamlit.io`/GitHub's web UI (API access to github.com for the git
+commands above works fine; actually deploying requires your own
+browser-based login). Open-Meteo reachability and the final live deploy
+itself should be confirmed once pushed — `DEPLOYMENT.md`'s verification
+checklist covers exactly this.
+
+## Project Status: Complete, deployment-ready
+
+All 8 days are done. What's in this repository is an honestly-tested
 software-simulation smart irrigation system: a physically-grounded simulated
 dataset (with a serious labeling-timing bug found and fixed, not papered
 over), three fairly compared ML models with a properly-reproducible,
-data-verified winner (Neural Network, F1=0.724), live weather integration
+data-verified winner (Neural Network, served via a dependency-light NumPy
+reimplementation, not the heavyweight original), live weather integration
 with a genuine offline fallback, an out-of-distribution detector, a hard
 safety-override layer for extreme conditions, an interactive dashboard that
-actually uses the best model, and a systematic edge-case test suite (90.2%
-pass rate) with root-caused findings and honestly-documented residual
-limitations rather than a suspiciously perfect scorecard.
+actually uses the best model at its correctly-calibrated threshold, a
+systematic edge-case test suite (89.3% pass rate, honestly re-verified
+after fixing the threshold bug) with root-caused findings rather than a
+suspiciously perfect scorecard, and a deployment-ready footprint (~290MB
+RAM, pinned dependencies, verified in a clean environment) with step-by-step
+instructions for the manual GitHub/Streamlit Cloud steps that require your
+own accounts.
 
 
